@@ -93,6 +93,17 @@ pub fn patterns() -> Vec<signatures::common::Signature> {
             //extractor: Some(extractors::sevenzip::sevenzip_extractor()),
             extractor: Some(extractors::lzma::lzma_extractor()),
         },
+        // ingenic jzlzma
+        signatures::common::Signature {
+            name: "jzlzma".to_string(),
+            short: false,
+            magic_offset: 0,
+            always_display: false,
+            magic: signatures::jzlzma::jzlzma_magic(),
+            parser: signatures::jzlzma::jzlzma_parser,
+            description: signatures::jzlzma::DESCRIPTION.to_string(),
+            extractor: Some(extractors::jzlzma::jzlzma_extractor()),
+        },
         // bmp
         signatures::common::Signature {
             name: "bmp".to_string(),

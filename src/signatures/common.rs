@@ -1,5 +1,6 @@
 use crate::extractors;
 use serde::{Deserialize, Serialize};
+use std::cmp::Ordering;
 
 /// Some pre-defined confidence levels for SignatureResult structures
 pub const CONFIDENCE_LOW: u8 = 0;
@@ -40,7 +41,7 @@ pub type SignatureParser = fn(&[u8], usize) -> Result<SignatureResult, Signature
 /// SignatureResult structs are sortable by `offset`.
 ///
 /// SignatureResult structs can be JSON serialized/deserialized with [serde](https://crates.io/crates/serde).
-#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct SignatureResult {
     /// File/data offset where this signature starts
     pub offset: usize,
@@ -61,6 +62,26 @@ pub struct SignatureResult {
     /// Signatures may specify a preferred extractor, which overrides the default extractor specified in the Signature.extractor definition
     #[serde(skip_deserializing, skip_serializing)]
     pub preferred_extractor: Option<extractors::common::Extractor>,
+}
+
+impl PartialEq for SignatureResult {
+    fn eq(&self, other: &Self) -> bool {
+        self.offset == other.offset
+    }
+}
+
+impl Eq for SignatureResult {}
+
+impl PartialOrd for SignatureResult {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl Ord for SignatureResult {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.offset.cmp(&other.offset)
+    }
 }
 
 /// Defines a file signature to search for, and how to extract that file type
