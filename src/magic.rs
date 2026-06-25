@@ -336,6 +336,17 @@ pub fn patterns() -> Vec<signatures::common::Signature> {
             description: signatures::romfs::DESCRIPTION.to_string(),
             extractor: Some(extractors::romfs::romfs_extractor()),
         },
+        // littlefs
+        signatures::common::Signature {
+            name: "littlefs".to_string(),
+            short: false,
+            magic_offset: 8,
+            always_display: false,
+            magic: signatures::littlefs::littlefs_magic(),
+            parser: signatures::littlefs::littlefs_parser,
+            description: signatures::littlefs::DESCRIPTION.to_string(),
+            extractor: Some(extractors::littlefs::littlefs_extractor()),
+        },
         // EXT
         signatures::common::Signature {
             name: "ext".to_string(),

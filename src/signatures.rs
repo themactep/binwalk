@@ -178,6 +178,7 @@ pub mod qnx;
 pub mod rar;
 pub mod riff;
 pub mod romfs;
+pub mod littlefs;
 pub mod rsa;
 pub mod rtk;
 pub mod seama;

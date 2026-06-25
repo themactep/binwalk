@@ -163,6 +163,7 @@ pub mod jffs2;
 pub mod jpeg;
 pub mod jzlzma;
 pub mod linux;
+pub mod littlefs;
 pub mod lz4;
 pub mod lzfse;
 pub mod lzma;
